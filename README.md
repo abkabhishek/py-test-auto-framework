@@ -26,6 +26,8 @@ pytest -v
 pytest -v -k registration
 #to run test function marked with mentioned marker (positive)
 pytest -v -m positive
+#to run all test and generate html report
+pytest --html=report.html -v
 
 ```
 

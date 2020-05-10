@@ -6,10 +6,12 @@ from AutomationPractice.registration_and_login.testdata.test_data_provider impor
 
 class TestRegistration:
 
+
     @pytest.mark.positive
     @pytest.mark.parametrize("new_user_data",
-                             TestDataProvider.generate_user_reg_data())
+                             TestDataProvider.generate_user_reg_data(save_user=True))
     def test_registration_success_scenario(self, app, new_user_data):
+        # TestDataProvider.save_created_account(new_user_data["email"], new_user_data["password"])
         app.home_page.open_homepage()
         app.home_page.click_sign_in()
         app.authentication_page.create_account_section.input_email_address(new_user_data["email"])
@@ -29,13 +31,12 @@ class TestRegistration:
         expected_full_name = new_user_data["first_name"] + " " + new_user_data["last_name"]
         pytest.assume(full_name == expected_full_name.lower(),
                       "Actual:{} ,Expected: {}".format(full_name, expected_full_name))
-        if full_name == expected_full_name.lower():
-            TestDataProvider.save_created_account(new_user_data["email"], new_user_data["password"])
 
     @pytest.mark.positive
     @pytest.mark.parametrize("new_user_data",
-                             TestDataProvider.generate_user_reg_data(only_required_fields=True))
+                             TestDataProvider.generate_user_reg_data(only_required_fields=True,save_user=True))
     def test_registration_success_scenario_only_required_fields(self, app, new_user_data):
+        # TestDataProvider.save_created_account(new_user_data["email"], new_user_data["password"])
         app.home_page.open_homepage()
         app.home_page.click_sign_in()
         app.authentication_page.create_account_section.input_email_address(new_user_data["email"])
@@ -55,8 +56,6 @@ class TestRegistration:
         expected_full_name = new_user_data["first_name"] + " " + new_user_data["last_name"]
         pytest.assume(full_name == expected_full_name.lower(),
                       "Actual:{} ,Expected: {}".format(full_name, expected_full_name))
-        if full_name == expected_full_name.lower():
-            TestDataProvider.save_created_account(new_user_data["email"], new_user_data["password"])
 
     @pytest.mark.negative
     @pytest.mark.parametrize("new_user_data,errors",

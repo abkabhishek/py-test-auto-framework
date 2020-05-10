@@ -1,6 +1,7 @@
 from faker import Faker
 import os
 from pprint import pprint
+from sys import stdout as console
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -8,6 +9,10 @@ dir_path = os.path.dirname(os.path.realpath(__file__))
 class TestDataProvider:
     """This is Test Data Provider class to supply test data after generating it as per requirement to test functions and saving created account in a csv file for later use."""
     email_template = "autopracuser{}@mailnesia.com"
+    currentCount = None
+
+
+
 
     @classmethod
     def save_created_account(cls, email, password):
@@ -17,6 +22,7 @@ class TestDataProvider:
         """
         with open(os.path.join(dir_path, "created_accounts.csv"), "a+") as fl:
             fl.write("{}, {}\n".format(email, password))
+        console.write("====== Created User is Saved =======")
 
     @classmethod
     def get_created_account(cls, get_all=False):
@@ -32,7 +38,7 @@ class TestDataProvider:
         return account
 
     @classmethod
-    def generate_user_reg_data(cls, count=1, without_fields=None, only_required_fields=False):
+    def generate_user_reg_data(cls, count=1, without_fields=None, only_required_fields=False,save_user=False):
         """
         To Generate Personal Information Fields data for new account registration
         """
@@ -45,7 +51,8 @@ class TestDataProvider:
             user_reg_data["first_name"], user_reg_data["last_name"] = faker.first_name(), faker.last_name()
             user_reg_data["email"] = cls.generate_email()
             user_reg_data["password"] = "autoprac1234"
-
+            if save_user:
+                cls.save_created_account(user_reg_data["email"],user_reg_data["password"])
             address = faker.address()
             first_address, second_address = address.split("\n")
             # _,state,zipcode = second_address.split()
@@ -83,9 +90,15 @@ class TestDataProvider:
     @classmethod
     def generate_email(cls):
         """To Generated new Email for new account creation as per saved account details """
+        return cls.email_template.format(cls.get_number_of_accounts() + 1)
+
+    @classmethod
+    def get_number_of_accounts(cls):
         accounts = cls.get_created_account(get_all=True)
         total_accounts = len(accounts)
-        return cls.email_template.format(total_accounts + 1)
+        TestDataProvider.currentCount = total_accounts
+        return total_accounts
+
 
     @classmethod
     def get_creds_list_neg_combo1(cls):
