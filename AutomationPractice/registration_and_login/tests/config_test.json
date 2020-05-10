@@ -1,0 +1,7 @@
+{
+  "base_url":"http://automationpractice.com",
+  "browser": "chrome",
+  "headless": "false",
+  "implicit_wait": 10,
+  "environment": "local"
+}
