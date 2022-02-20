@@ -12,8 +12,9 @@ Sample Test Automation project to show automation by using Python, Pytest and Se
 ```bash
 > git clone https://github.com/abkabhishek/py-test-auto-framework.git
 > cd py-test-auto-framework
-> pipenv shell
-> pipenv install
+> virtualenv venv (create virtual env)
+> source venv/Scripts/activate (activate virtual env)
+> pip install -r requirements.txt (install dependencies)
 > export PYTHONPATH=$(pwd):$PYTHONPATH
 ```
 
