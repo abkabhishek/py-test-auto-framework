@@ -1,7 +1,7 @@
 async-generator==1.10
 atomicwrites==1.4.0
 attrs==21.4.0
-certifi==2021.10.8
+certifi==2022.12.7
 cffi==1.15.0
 colorama==0.4.4
 cryptography==36.0.1
